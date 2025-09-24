@@ -55,7 +55,7 @@ python src/visualization.py --model CLAM_SB --model_path checkpoints/best.pth --
 python src/tissue_analysis.py --dataset AJOU --tissue_patch_dir ../Patch_Noh
 ```
 
-> 📖 **Detailed Usage**: See [Parameter Guide](UNIFIED_PARAMETERS.md) for complete parameter documentation.
+> 📖 **Detailed Usage**: Complete parameter documentation available in the repository.
 
 ## 📊 Datasets & Models
 
@@ -78,7 +78,9 @@ python src/tissue_analysis.py --dataset AJOU --tissue_patch_dir ../Patch_Noh
 
 ![Figure 1](figures/figure1.png)
 
-**Figure 1. Comprehensive Framework for STAD Treatment Response Prediction**. The study design encompasses a complete pipeline from whole slide image (WSI) processing to clinical prediction. (A) **Data Collection**: Multi-institutional dataset including AJOU, TCGA, STFD, and JNUH cohorts with H&E stained gastric adenocarcinoma slides. (B) **Patch Extraction**: Automated tissue segmentation and patch extraction at 40× magnification with quality filtering. (C) **Feature Extraction**: Multiple foundation models (DINO, UNI, GigaPath, Lunit) extract deep features from tissue patches. (D) **MIL Training**: Nine different Multiple Instance Learning architectures learn slide-level representations for treatment response prediction. (E) **Attention Visualization**: Generation of interpretable attention heatmaps highlighting tissue regions important for prediction. (F) **Tissue Pattern Analysis**: Correlation-based analysis identifying specific histological patterns associated with treatment response. (G) **Clinical Integration**: Cross-validation and statistical analysis providing robust performance metrics for clinical decision support.
+**Figure 1. STAD Treatment Response Prediction Framework**. Complete pipeline from WSI processing to clinical prediction including data collection, patch extraction, feature extraction, MIL training, attention visualization, and tissue pattern analysis.
+
+---
 
 ### Performance Results
 
@@ -87,14 +89,14 @@ Values represent AUC (95% confidence interval) for treatment response prediction
 
 | MIL Architecture | UNI | GigaPath (GP) | Lunit-DINO |
 |------------------|-----|---------------|-------------|
-| **ABMIL** | 0.746 (0.608-0.885) | 0.697 (0.546-0.847) | 0.722 (0.572-0.872) |
-| **ACMIL** | 0.835 (0.718-0.952) | 0.811 (0.690-0.932) | 0.764 (0.626-0.902) |
-| **CLAM_MB** | **0.844 (0.732-0.956)** | 0.833 (0.714-0.951) | 0.717 (0.569-0.865) |
-| **CLAM_SB** | 0.787 (0.655-0.919) | 0.832 (0.715-0.947) | 0.741 (0.596-0.886) |
-| **DSMIL** | 0.691 (0.541-0.841) | 0.682 (0.528-0.837) | 0.615 (0.452-0.779) |
-| **GABMIL** | 0.759 (0.619-0.900) | 0.716 (0.568-0.865) | 0.741 (0.603-0.880) |
-| **MaxMIL** | 0.572 (0.420-0.752) | 0.674 (0.520-0.827) | 0.610 (0.453-0.776) |
-| **TransMIL** | 0.842 (0.725-0.958) | 0.761 (0.627-0.895) | 0.718 (0.572-0.864) |
+| **ABMIL** | 0.746<br>(0.608-0.885) | 0.697<br>(0.546-0.847) | 0.722<br>(0.572-0.872) |
+| **ACMIL** | 0.835<br>(0.718-0.952) | 0.811<br>(0.690-0.932) | 0.764<br>(0.626-0.902) |
+| **CLAM_MB** | **0.844**<br>**(0.732-0.956)** | 0.833<br>(0.714-0.951) | 0.717<br>(0.569-0.865) |
+| **CLAM_SB** | 0.787<br>(0.655-0.919) | 0.832<br>(0.715-0.947) | 0.741<br>(0.596-0.886) |
+| **DSMIL** | 0.691<br>(0.541-0.841) | 0.682<br>(0.528-0.837) | 0.615<br>(0.452-0.779) |
+| **GABMIL** | 0.759<br>(0.619-0.900) | 0.716<br>(0.568-0.865) | 0.741<br>(0.603-0.880) |
+| **MaxMIL** | 0.572<br>(0.420-0.752) | 0.674<br>(0.520-0.827) | 0.610<br>(0.453-0.776) |
+| **TransMIL** | 0.842<br>(0.725-0.958) | 0.761<br>(0.627-0.895) | 0.718<br>(0.572-0.864) |
 
 **Table 2. Comprehensive performance metrics using UNI foundation model**
 All metrics reported with 95% confidence intervals.
@@ -112,9 +114,15 @@ All metrics reported with 95% confidence intervals.
 
 *PPV: Positive Predictive Value, NPV: Negative Predictive Value. Bold values indicate best performance in each metric.*
 
+---
+
 ### Attention Heatmap Examples
 
-![Figure 2](figures/figure2.png)
+![Figure 2](figures/fig2.png)
+
+> 📖 **Detailed Visualization Guide**: See [ATTENTION_HEATMAP_GUIDE.md](ATTENTION_HEATMAP_GUIDE.md) for complete heatmap generation and interpretation documentation.
+
+---
 
 ### Tissue Pattern Analysis  
 *[Add your tissue correlation analysis figures here]*
@@ -128,7 +136,6 @@ All metrics reported with 95% confidence intervals.
 
 ## 📖 Documentation
 
-- **[Parameter Guide](UNIFIED_PARAMETERS.md)**: Complete parameter reference for all scripts
 - **[Configuration](configs/dataset_config.yaml)**: Dataset and model configuration file
 
 ## 🤝 Contributing & Citation
