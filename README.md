@@ -114,7 +114,7 @@ All metrics reported with 95% confidence intervals.
 
 ### Attention Heatmap Examples
 
-![Figure 2](figures/fig2.png)
+![Figure 2](figures/figure2.png)
 
 ### Tissue Pattern Analysis  
 *[Add your tissue correlation analysis figures here]*
