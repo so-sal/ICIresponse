@@ -59,11 +59,13 @@ python src/tissue_analysis.py --dataset AJOU --tissue_patch_dir ../Patch_Noh
 
 ## 📊 Datasets & Models
 
-| Dataset | Institution | Total | Responder | Non-responder | Response Rate | Usage |
-|---------|-------------|-------|-----------|---------------|---------------|-------|
-| **JNUH** | Jeonbuk National Univ. (CNUHH) | 107 | 53 | 54 | 49.5% | Independent Test |
-| **AJOU** | Ajou University Hospital | 127 | 91 | 36 | 71.7% | Primary Training |
-| **STFD** | Stanford University | 18 | 8 | 10 | 44.4% | External Validation |
+| Institution                    | Slides | Patients | Responder | Non-responder | Response Rate | Usage               |
+| ------------------------------ | ------ | -------- | --------- | ------------- | ------------- | ------------------- |
+| Ceonbuk Nat. Univ. Hospital | 272    | 107      | 53        | 54            | 49.5%         | Independent Test    |
+| Ajou University Hospital       | 373    | 127      | 91        | 36            | 71.7%         | Primary Training    |
+| Stanford University            | 25     | 18       | 8         | 10            | 44.4%         | External Validation |
+
+
 
 | Foundation Model | Features | Parameters | Patch Size |
 |------------------|----------|------------|------------|
