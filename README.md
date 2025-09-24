@@ -118,7 +118,7 @@ All metrics reported with 95% confidence intervals.
 
 ### Attention Heatmap Examples
 
-![Figure 2](figures/fig2.png)
+![Figure 2](figures/figure2.png)
 
 > 📖 **Detailed Visualization Guide**: See [ATTENTION_HEATMAP_GUIDE.md](ATTENTION_HEATMAP_GUIDE.md) for complete heatmap generation and interpretation documentation.
 
