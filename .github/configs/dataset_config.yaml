@@ -1,0 +1,356 @@
+# Dataset-specific configuration file for STAD Analysis
+
+datasets:
+  JNUH:
+    name: "Jeonbuk National University Hospital"
+    description: "Korean hospital gastric cancer cohort"
+    slide_dir: "/mnt/e/JNUH/STAD_WSI/Gastric_Ca_ImmunoTx/"
+    clinical_file: "STAD.tsv"
+    output_dir: "Features_STAD_JNUH"
+    
+    # Patch extraction settings
+    patch_extraction:
+      patch_size: 448
+      stride: 448
+      downsample: 2
+      sat_thresh: 9
+      area_thresh: 0.4
+      magnification_key: "aperio.AppMag"
+      default_magnification: 40
+    
+    # Clinical data settings
+    clinical:
+      index_column: "ID"
+      response_column: "Response"
+      positive_responses: ["R"]
+      separator: "\t"
+    
+    # Visualization settings
+    visualization:
+      downsample_factor: 28
+      alpha: 0.4
+      figsize: 15
+
+  AJOU:
+    name: "Ajou University Hospital"
+    description: "Korean hospital gastric cancer cohort with detailed clinical data"
+    slide_dir: "/mnt/f/AJOU/STAD_WSI/"
+    clinical_file: "AJOU.csv"
+    output_dir: "Features_STAD_AJOU"
+    
+    # Patch extraction settings
+    patch_extraction:
+      patch_size: 448
+      stride: 448
+      downsample: 2
+      sat_thresh: 7
+      area_thresh: 0.5
+      magnification_key: "aperio.AppMag"
+      default_magnification: 40
+    
+    # Clinical data settings
+    clinical:
+      index_column: "연구ID"  # Korean research ID
+      response_column: "Best_of_Response"
+      positive_responses: ["CR", "PR"]  # Complete/Partial Response
+      separator: "\t"
+    
+    # Special handling for AJOU
+    filename_parsing:
+      split_pattern: ".svs"
+      id_position: 0
+    
+    # Visualization settings
+    visualization:
+      downsample_factor: 28
+      alpha: 0.4
+      figsize: 15
+
+  TCGA:
+    name: "The Cancer Genome Atlas - STAD"
+    description: "Public stomach adenocarcinoma dataset"
+    slide_dir: "/mnt/e/TCGA/STAD/svs/"
+    clinical_file: "STAD.tsv"
+    output_dir: "Features_TCGA"
+    
+    # Patch extraction settings
+    patch_extraction:
+      patch_size: 448
+      stride: 448
+      downsample: 1  # Higher resolution for TCGA
+      sat_thresh: 5
+      area_thresh: 0.3
+      magnification_key: "openslide.objective-power"
+      default_magnification: 40
+    
+    # Clinical data settings
+    clinical:
+      index_column: "ID"
+      response_column: "Response"
+      positive_responses: ["R"]
+      separator: "\t"
+    
+    # TCGA specific filename parsing
+    filename_parsing:
+      split_pattern: "_"
+      id_position: 0
+      id_length: 12  # TCGA barcode length
+    
+    # Visualization settings
+    visualization:
+      downsample_factor: 28
+      alpha: 0.3
+      figsize: 20
+
+  STFD:
+    name: "Stanford Dataset"
+    description: "Stanford gastric cancer validation cohort"
+    slide_dir: "/mnt/g/Stanford/STAD/"
+    clinical_file: "SFTD.xlsx"
+    output_dir: "Features_STFD"
+    
+    # Patch extraction settings
+    patch_extraction:
+      patch_size: 448
+      stride: 448
+      downsample: 2
+      sat_thresh: 7
+      area_thresh: 0.4
+      magnification_key: "openslide.objective-power"
+      default_magnification: 20  # Different magnification
+    
+    # Clinical data settings
+    clinical:
+      index_column: "ID"
+      response_column: "Response"
+      positive_responses: ["R", "CR", "PR"]
+      file_type: "excel"  # Excel file instead of CSV
+    
+    # Visualization settings
+    visualization:
+      downsample_factor: 28
+      alpha: 0.4
+      figsize: 15
+
+# Model-specific configurations
+models:
+  feature_extraction:
+    DINO:
+      model_name: "facebook/dino-vitb16"
+      feature_dim: 384
+      patch_size: 224
+      transforms:
+        resize: 224
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
+      url_prefix: "https://github.com/lunit-io/benchmark-ssl-pathology/releases/download/pretrained-weights"
+      weights:
+        DINO_p16: "dino_vit_small_patch16_ep200.torch"
+        DINO_p8: "dino_vit_small_patch8_ep200.torch"
+    
+    UNI:
+      model_name: "vit_large_patch16_224"
+      feature_dim: 1024
+      patch_size: 224
+      transforms:
+        resize: 224
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
+      huggingface_repo: "MahmoodLab/UNI"
+      weights_file: "pytorch_model.bin"
+    
+    GigaPath:
+      model_name: "gigapath_vitl16"
+      feature_dim: 1536
+      patch_size: 256
+      transforms:
+        resize: 256
+        center_crop: 224
+        mean: [0.5, 0.5, 0.5]
+        std: [0.5, 0.5, 0.5]
+    
+    Lunit:
+      model_name: "lunit_ssl"
+      feature_dim: 512
+      patch_size: 224
+      transforms:
+        resize: 224
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
+
+  mil_architectures:
+    CLAM_SB:
+      description: "CLAM Single Branch"
+      required_params:
+        - feat_d
+        - dropout
+        - n_class
+      default_params:
+        feat_d: 1024
+        dropout: 0.25
+        n_class: 2
+        bag_loss: "ce"
+        inst_loss: "ce"
+        B: 8
+    
+    CLAM_MB:
+      description: "CLAM Multi Branch"
+      required_params:
+        - feat_d
+        - dropout
+        - n_class
+      default_params:
+        feat_d: 1024
+        dropout: 0.25
+        n_class: 2
+        bag_loss: "ce"
+        inst_loss: "ce"
+        B: 8
+    
+    TransMIL:
+      description: "Transformer-based MIL"
+      required_params:
+        - D_feat
+        - n_class
+      default_params:
+        D_feat: 1024
+        dropout: 0.25
+        n_class: 2
+        n_token: 5
+        n_masked_patch: 10
+        mask_drop: 0.6
+    
+    ACMIL:
+      description: "Attention-Constrained MIL"
+      required_params:
+        - feat_d
+        - n_class
+      default_params:
+        feat_d: 1024
+        dropout: 0.25
+        n_class: 2
+        bag_loss: "ce"
+        inst_loss: "ce"
+    
+    DSMIL:
+      description: "Dual-Stream MIL"
+      required_params:
+        - D_feat
+        - n_class
+      default_params:
+        D_feat: 1024
+        dropout: 0.25
+        n_class: 2
+    
+    ABMIL:
+      description: "Attention-Based MIL"
+      required_params:
+        - feat_d
+        - n_class
+      default_params:
+        feat_d: 1024
+        dropout: 0.25
+        n_class: 2
+    
+    GABMIL:
+      description: "Gated Attention-Based MIL"
+      required_params:
+        - feat_d
+        - n_class
+      default_params:
+        feat_d: 1024
+        dropout: 0.25
+        n_class: 2
+    
+    MeanMIL:
+      description: "Mean Pooling MIL"
+      required_params:
+        - feat_d
+        - n_class
+      default_params:
+        feat_d: 1024
+        dropout: 0.25
+        n_class: 2
+    
+    MaxMIL:
+      description: "Max Pooling MIL"
+      required_params:
+        - feat_d
+        - n_class
+      default_params:
+        feat_d: 1024
+        dropout: 0.25
+        n_class: 2
+
+# Training configurations
+training:
+  default:
+    epochs: 50
+    batch_size: 1
+    learning_rate: 1e-4
+    weight_decay: 1e-5
+    optimizer: "Adam"
+    scheduler: "ReduceLROnPlateau"
+    scheduler_params:
+      mode: "min"
+      factor: 0.5
+      patience: 5
+      min_lr: 1e-6
+  
+  cross_validation:
+    n_splits: 5
+    validation_split: 0.25
+    stratified: true
+    group_based: true  # Group by patient ID
+
+# Visualization configurations
+visualization:
+  colormaps:
+    attention: "jet"
+    transparency_first_color: true
+    patch_overlay: "black_transparent"
+    background_white: "white_transparent"
+  
+  heatmap_types:
+    - "standard"
+    - "minmax_scaled" 
+    - "zscore_scaled"
+    - "multiscale"
+  
+  output_formats:
+    - "png"
+    - "pdf"
+  
+  default_params:
+    dpi: 300
+    alpha: 0.4
+    gaussian_blur_kernel: 5
+
+# Tissue pattern analysis
+tissue_analysis:
+  tissue_classes:
+    - "NR_Fibrosis"
+    - "NR_Signet_Ring_Cell"
+    - "R_Hyperchromasia"
+    - "R_Enlarged_Nuclei"
+  
+  correlation_analysis:
+    top_features: 128
+    mutual_info: true
+    pearson_correlation: true
+  
+  umap_settings:
+    n_components: 1
+    random_state: 42
+    n_neighbors: 15
+    min_dist: 0.1
+
+# Output directory structure
+output_structure:
+  features: "Feature_{backbone}"
+  coordinates: "Coord_{backbone}"
+  heatmaps: "Heatmap_{backbone}"
+  models: "checkpoints"
+  visualizations: "visualizations"
+  tissue_analysis: "tissue_analysis"
+  logs: "logs"
