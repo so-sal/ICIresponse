@@ -13,7 +13,7 @@ This framework provides a complete pipeline for analyzing pathological images to
 ### Key Features
 - **🔄 Unified Pipeline**: Feature extraction → MIL training → Attention visualization → Tissue analysis
 - **🏥 Multi-Dataset Support**: AJOU, TCGA, STFD, JNUH with dataset-specific optimizations
-- **🤖 Foundation Models**: DINO, UNI, GigaPath, Lunit for robust feature extraction
+- **🤖 Foundation Models**: UNI, GigaPath, Lunit-DINO for robust feature extraction
 - **🧠 MIL Architectures**: 9 different models (CLAM, TransMIL, ABMIL, DSMIL, etc.)
 - **📊 Rich Visualizations**: Attention heatmaps, tissue pattern analysis, statistical plots
 - **⚡ Easy Configuration**: Single command execution with comprehensive parameter control
@@ -22,7 +22,7 @@ This framework provides a complete pipeline for analyzing pathological images to
 
 ```
 .github/src/
-├── feature_extraction.py    # Unified feature extraction (DINO/UNI/GigaPath/Lunit)
+├── feature_extraction.py    # Unified feature extraction (UNI/GigaPath/Lunit-DINO)
 ├── mil_training.py          # MIL training with 9 architectures  
 ├── visualization.py         # Attention heatmap generation
 ├── tissue_analysis.py       # Tissue pattern correlation analysis
@@ -69,10 +69,9 @@ python src/tissue_analysis.py --dataset AJOU --tissue_patch_dir ../Patch_Noh
 
 | Foundation Model | Features | Parameters | Patch Size |
 |------------------|----------|------------|------------|
-| **DINO** | 384-dim | 21M | 224×224 |
 | **UNI** | 1024-dim | 307M | 224×224 |
 | **GigaPath** | 1536-dim | 1.1B | 256×256 |
-| **Lunit** | 512-dim | 86M | 224×224 |
+| **Lunit-DINO** | 384-dim | 21M | 224×224 |
 
 ## 🎨 Framework Overview & Results
 
