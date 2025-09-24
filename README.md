@@ -55,16 +55,15 @@ python src/visualization.py --model CLAM_SB --model_path checkpoints/best.pth --
 python src/tissue_analysis.py --dataset AJOU --tissue_patch_dir ../Patch_Noh
 ```
 
-> 📖 **Detailed Usage**: See [Parameter Guide](UNIFIED_PARAMETERS.md) for all options and [Attention Guide](ATTENTION_HEATMAP_GUIDE.md) for visualization details.
+> 📖 **Detailed Usage**: See [Parameter Guide](UNIFIED_PARAMETERS.md) for complete parameter documentation.
 
 ## 📊 Datasets & Models
 
-| Dataset | Institution | Samples | Response Rate | Usage |
-|---------|-------------|---------|---------------|-------|
-| **AJOU** | Ajou University Hospital | 400+ | 45.2% | Primary Training |
-| **TCGA** | The Cancer Genome Atlas | 300+ | 52.1% | Cross-Validation |
-| **STFD** | Stanford University | 200+ | 38.7% | External Validation |
-| **JNUH** | Jeonbuk National Univ. | 100+ | 41.3% | Independent Test |
+| Dataset | Institution | Total | Responder | Non-responder | Response Rate | Usage |
+|---------|-------------|-------|-----------|---------------|---------------|-------|
+| **JNUH** | Jeonbuk National Univ. (CNUHH) | 107 | 53 | 54 | 49.5% | Independent Test |
+| **AJOU** | Ajou University Hospital | 127 | 91 | 36 | 71.7% | Primary Training |
+| **STFD** | Stanford University | 18 | 8 | 10 | 44.4% | External Validation |
 
 | Foundation Model | Features | Parameters | Patch Size |
 |------------------|----------|------------|------------|
@@ -114,7 +113,8 @@ All metrics reported with 95% confidence intervals.
 *PPV: Positive Predictive Value, NPV: Negative Predictive Value. Bold values indicate best performance in each metric.*
 
 ### Attention Heatmap Examples
-*[Add your attention heatmap visualizations here]*
+
+![Figure 2](figures/fig2.png)
 
 ### Tissue Pattern Analysis  
 *[Add your tissue correlation analysis figures here]*
@@ -129,7 +129,6 @@ All metrics reported with 95% confidence intervals.
 ## 📖 Documentation
 
 - **[Parameter Guide](UNIFIED_PARAMETERS.md)**: Complete parameter reference for all scripts
-- **[Attention Heatmap Guide](ATTENTION_HEATMAP_GUIDE.md)**: Detailed visualization documentation  
 - **[Configuration](configs/dataset_config.yaml)**: Dataset and model configuration file
 
 ## 🤝 Contributing & Citation
